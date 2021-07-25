@@ -42,9 +42,9 @@ namespace PDR.PatientBooking.Service.BookingServices.Validation
 
         public bool DoctorAlreadyBooked(AddBookingRequest request, ref PdrValidationResult result)
         {
-            if (_context.Order.Any(o => o.DoctorId == request.DoctorId && o.StartTime == request.StartTime))
+            if (_context.Order.Any(o => o.StartTime <= request.StartTime && o.EndTime >= request.StartTime))
             {
-                result.Errors.Add("Doctor already has a booking scheduled at the start time.");
+                result.Errors.Add("Doctor already has a booking scheduled over the requested time.");
                 result.PassedValidation = false;
                 return true;
             }
