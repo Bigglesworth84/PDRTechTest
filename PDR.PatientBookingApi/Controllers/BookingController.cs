@@ -21,16 +21,16 @@ namespace PDR.PatientBookingApi.Controllers
         }
 
         [HttpGet("patient/{identificationNumber}/next")]
-        public IActionResult GetPatientNextAppointment(long identificationNumber)
+        public IActionResult GetPatientNextBooking(long identificationNumber)
         {
             try
             {
-                var nextAppointment = _bookingService.GetPatientNextAppointment(identificationNumber);
+                var nextBooking = _bookingService.GetPatientNextBooking(identificationNumber);
 
-                if (nextAppointment is null)
+                if (nextBooking is null)
                     return NotFound();
 
-                return Ok(nextAppointment);
+                return Ok(nextBooking);
             }
             catch (Exception ex)
             {
@@ -49,6 +49,20 @@ namespace PDR.PatientBookingApi.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult CancelBooking(Guid id)
+        {
+            try
+            {
+                _bookingService.CancelBooking(id);
+                return NoContent();
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PDR.PatientBooking.Service.BookingServices.Responses
 {
-    public class GetPatientNextAppointmentResponse
+    public class GetPatientNextBookingResponse
     {
         public Guid Id { get; set; }
         public long DoctorId { get; set; }

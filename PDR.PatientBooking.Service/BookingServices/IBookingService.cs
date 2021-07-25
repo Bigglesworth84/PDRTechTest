@@ -1,12 +1,15 @@
 ﻿using PDR.PatientBooking.Service.BookingServices.Requests;
 using PDR.PatientBooking.Service.BookingServices.Responses;
+using System;
 
 namespace PDR.PatientBooking.Service.BookingServices
 {
     public interface IBookingService
     {
-        GetPatientNextAppointmentResponse GetPatientNextAppointment(long identificationNumber);
+        GetPatientNextBookingResponse GetPatientNextBooking(long identificationNumber);
 
         AddBookingResponse AddBooking(AddBookingRequest request);
+
+        void CancelBooking(Guid id);
     }
 }

@@ -52,7 +52,18 @@ namespace PDR.PatientBooking.Service.BookingServices
             };
         }
 
-        public GetPatientNextAppointmentResponse GetPatientNextAppointment(long identificationNumber)
+        public void CancelBooking(Guid id)
+        {
+            var booking = _context.Order.Find(id);
+
+            if (booking != null)
+            {
+                _context.Order.Remove(booking);
+                _context.SaveChanges();
+            }
+        }
+
+        public GetPatientNextBookingResponse GetPatientNextBooking(long identificationNumber)
         {
             var nextBooking = _context.Order
                 .Where(o => o.PatientId == identificationNumber && o.StartTime > DateTime.Now)
@@ -61,7 +72,7 @@ namespace PDR.PatientBooking.Service.BookingServices
             if (nextBooking is null)
                 return null;
 
-            return new GetPatientNextAppointmentResponse
+            return new GetPatientNextBookingResponse
             {
                 Id = nextBooking.Id,
                 DoctorId = nextBooking.DoctorId,
